@@ -100,7 +100,7 @@ Evaluate every category below. For each finding, record the severity and specifi
 
 ---
 
-#### 3.1 Functionality & Correctness
+#### 4.1 Functionality & Correctness
 
 Does the code actually do what it claims to do?
 
@@ -118,7 +118,24 @@ Does the code actually do what it claims to do?
 
 ---
 
-#### 3.2 Design & Architecture
+#### 4.2 Runtime & Environmental Context
+
+When code shares its runtime with state it doesn't own. Does this code account for that?
+
+| Check | What to look for |
+|-------|-----------------|
+| RE-1 | **Input ownership (principle)**: for every value the code reads, identify who else can write it. If the code is not the sole writer, list the other writers and ask: does the logic remain correct for any value they might produce? Common sources: env vars, request headers/bodies, query params, cookies, files, database rows, cache entries, third-party API responses, global config, shared module state. |
+| RE-2 | **Shared-namespace conflation**: when code reads a well-known shared identifier - env vars like `DEBUG`/`NODE_ENV`/`HTTP_PROXY`/`PATH`, headers like `Authorization`/`X-Forwarded-For`, paths like `~/.aws/credentials` - the value reflects whatever the entire environment wrote, not just this code. `Boolean(process.env.DEBUG)` returns true if *any* tool set it. Same trap with equality checks (`=== 'production'`) and content reads (`headers.Authorization.startsWith('Bearer')`). |
+| RE-3 | **Filesystem state with external writers**: lock files, config files, temp directories, cache dirs, and well-known paths (`/tmp`, `~/.config/<app>/`) may be written by other processes, prior runs, or other tools. Reads should account for stale, partial, or unexpected contents. `fs.existsSync(path)` does not mean "we created it". |
+| RE-4 | **Concurrent external writers**: when reading a database row, cache entry, queue message, or feature-flag value, ask whether another process or request could mutate it between the read and the action. The concern is writers *outside* this code's control - not this code's own concurrent operations. |
+| RE-5 | **Module load-time caching**: third-party packages that read config (env vars, files, globals) at `import` time and cache it - the `debug` package's namespace list, ORM connection pools, HTTP client defaults, plugin registries, Mutating the source after the package loads has no effect; you must use the package's runtime-update API. |
+| RE-6 | **Initialization / lifecycle ordering**: when state is read versus written across the lifecycle. OCLIF's `init()` vs `run()`, Express middleware order, React effect order, lazy singletons. A scan like `argv.includes('--debug')` only sees what's been parsed at that lifecycle point. Reading before something earlier had a chance to set produces state or unset reads. |
+| RE-7 | **Cross-boundary state propagation**: identify the boundaries the code crosses (process, request, thread, transaction) and confirm state crosses them the way the author intends. Subprocesses inherit parent `process.env` (setting `DEBUG=*` leaks to children). HTTP handlers share module-level state across requests. Module-level mutable state outlives any single invocation. |
+| RE-8 | **Time and randomness as input**: `Date.now()`, `new Date()`, `Math.random()`, `crypto.randomBytes()` are reads of ambient state that changes between calls. Logic comparing two reads (`if (Date.now() > deadline)`) or reusing a value across `await`s is exposed to that change. Tests using these without seeding will be flaky. |
+
+---
+
+#### 4.3 Design & Architecture
 
 Is the code well-structured and in the right place?
 
@@ -136,7 +153,7 @@ Is the code well-structured and in the right place?
 
 ---
 
-#### 3.3 Readability & Maintainability
+#### 4.4 Readability & Maintainability
 
 Can someone else understand this quickly?
 
@@ -153,7 +170,7 @@ Can someone else understand this quickly?
 
 ---
 
-#### 3.4 Completeness
+#### 4.5 Completeness
 
 Are all related files updated consistently?
 
@@ -167,7 +184,7 @@ Are all related files updated consistently?
 
 ---
 
-#### 3.5 Semantic Validity
+#### 4.6 Semantic Validity
 
 After mechanical changes (find-and-replace, renames, type swaps, deletions), does everything still make logical sense? This catches a class of bugs where code is technically "updated" but no longer correct in context.
 
@@ -182,7 +199,7 @@ After mechanical changes (find-and-replace, renames, type swaps, deletions), doe
 
 ---
 
-#### 3.6 Testing & Quality
+#### 4.7 Testing & Quality
 
 Do tests verify behavior correctly and completely?
 
@@ -201,7 +218,7 @@ Do tests verify behavior correctly and completely?
 
 ---
 
-#### 3.7 Security & Privacy
+#### 4.8 Security & Privacy
 
 Is the code safe from common vulnerabilities?
 
@@ -215,7 +232,7 @@ Is the code safe from common vulnerabilities?
 
 ---
 
-#### 3.8 Performance & Efficiency
+#### 4.9 Performance & Efficiency
 
 Is the code efficient with resources?
 
@@ -229,7 +246,7 @@ Is the code efficient with resources?
 
 ---
 
-#### 3.9 Documentation & Intent
+#### 4.10 Documentation & Intent
 
 Is non-obvious logic explained?
 
