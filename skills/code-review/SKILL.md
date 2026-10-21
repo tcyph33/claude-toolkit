@@ -285,7 +285,7 @@ Based on findings, assign an overall verdict:
 
 ### Step 7: Generate the Review Report
 
-```markdown
+````markdown
 # PR Review: <PR title>
 **PR**: <URL>
 **Verdict**: APPROVE | APPROVE WITH NITS | NEEDS CHANGES | NEEDS DISCUSSION
@@ -293,26 +293,74 @@ Based on findings, assign an overall verdict:
 ## Summary
 [2-3 sentences: what the PR does, overall assessment, key concern if any]
 
-## Issues
+## Findings
 
-### [SEVERITY] <Check ID>: <Short title>
-**File**: `path/to/file:line`
-**Issue**: What is wrong
-**Suggestion**: How to fix it
-
-(Repeat for each issue found. Order by severity: blockers first, then warnings, then nits.)
+```json
+[
+  {
+    "file": "src/config.ts",
+    "line": 18,
+    "severity": "BLOCKER",
+    "check_id": "CM-3",
+    "title": "Removing getUserConfig leaves two callers broken",
+    "detail": "This PR deletes the getUserConfig export. Grepping the full clone shows two files still import it, neither of them in the diff, so nothing in the changed files surfaces the problem. Both will throw at import time once this merges.",
+    "comment": "Removing this export breaks two callers that aren't in this PR: `src/legacy/boot.ts:88` and `scripts/migrate.ts:12`. Both still import `getUserConfig` and will throw at import time, so they need updating before this can merge.",
+    "references": ["src/legacy/boot.ts:88", "scripts/migrate.ts:12"]
+  },
+  {
+    "file": "src/limiter/bucket.ts",
+    "line": 42,
+    "severity": "WARNING",
+    "check_id": "RE-8",
+    "title": "TTL has no jitter",
+    "detail": "Every bucket created in the same second expires in the same second, so a traffic spike produces a synchronized wave of Redis writes when they all refill at once. Not a correctness bug, but it undercuts some of the smoothing the limiter exists to provide. A small random offset on the TTL spreads the expiries out.",
+    "comment": "These TTLs all expire in lockstep, so a traffic spike turns into a synchronized write wave against Redis. Consider jittering by a few hundred ms: `ttl + Math.random() * 500`."
+  }
+]
+```
 
 ## What Looks Good
 - [Specific positive observations about the PR — acknowledge good solutions or elegant code]
 
 ## Verdict Rationale
 [1-2 sentences explaining why you chose this verdict]
-```
+````
 
 **Severity levels:**
 - **BLOCKER**: Must fix before merge (correctness bugs, security issues, breaking changes, missing tests for new behavior)
 - **WARNING**: Should fix before merge (incomplete docs, semantic validity issues, test quality problems, design concerns)
 - **NIT**: Optional improvement (style, minor simplification, documentation polish)
+
+#### Field reference
+
+| Field | Type | What it holds |
+|-------|------|---------------|
+| `file` | string | Repo-relative path of the **anchor** line — see anchoring rules below |
+| `line` | integer or null | Line number in the **new** version of the file, i.e. the head branch you cloned. `null` when there is nothing to anchor to |
+| `severity` | string | `BLOCKER`, `WARNING`, or `NIT` |
+| `check_id` | string | The checklist ID that caught it, e.g. `CR-3` |
+| `title` | string | One-line summary of the finding |
+| `detail` | string | Full explanation for the reviewer deciding whether this is worth raising: what is wrong, why it matters, and the suggested resolution. Analyst voice, as long as it needs to be |
+| `comment` | string | The comment to post on the PR, written to the author in second person — direct and actionable. Do not repeat the file or line; GitHub shows those automatically |
+| `references` | string[] | Optional. Other affected locations named in the `comment`. Omit when the finding is self-contained |
+
+#### Anchoring rules — where a finding attaches
+
+`file` and `line` are the **anchor**: the single place a review comment would hang. The anchor must be a line **this PR changed**. It is not necessarily where the problem lives.
+
+- **Problem is on a changed line** → anchor there. The common case.
+- **Problem is elsewhere** — a caller the PR missed, a stale reference in an untouched file, a config pointing at a deleted path → anchor on the **diff line that caused it**, name the affected locations in the `comment`, and list them in `references`.
+
+  The first finding in the example above does exactly this: the PR deletes an export, two untouched files still import it, so the comment anchors on the deletion and names both locations in `references`.
+
+  This is not a workaround. A comment on an untouched file has no diff to attach to, so anchoring on the cause is how a human reviewer raises it too.
+
+- **No changed line to anchor to at all** — e.g. "this PR adds no tests", "no migration guide for a breaking change" → set `line` to `null`. These belong in the Summary rather than as an inline comment.
+
+**Other rules for the JSON block:**
+- Order findings by severity: BLOCKER first, then WARNING, then NIT. Match the order to the Summary's narrative where they overlap.
+- Emit valid JSON — no trailing commas, no comments inside the block, every string on one line.
+- No findings at all → emit an empty array `[]`. Still emit the block.
 
 ### Step 8: Offer Next Steps
 
@@ -334,4 +382,5 @@ After presenting the report:
 - Only report actual findings, not a checklist of everything you checked
 - If the PR is trivially correct (typo fix, version bump), say so briefly and give APPROVE
 - Focus on the code, not the person — be constructive
+- Always emit the `## Findings` JSON block, even for a clean PR (`"findings": []`) — downstream tooling reads it
 - Don't rush — thorough reviews catch critical bugs
