@@ -52,7 +52,7 @@ PR_BRANCH=$(gh pr view <number> --repo <org>/<repo> --json headRefName --jq '.he
 mkdir -p ~/PR-Reviews
 
 # Shallow clone the PR branch using gh (handles SSL/auth correctly in corporate environments)
-gh repo clone <org>/<repo> ~/PR-Reviews/<repo>-<number> -- --depth=50 --branch "$PR_BRANCH"
+gh repo clone <org>/<repo> ~/PR-Reviews/<org>-<repo>-<number> -- --depth=50 --branch "$PR_BRANCH"
 ```
 
 Fetch the diff to know what changed:
@@ -367,7 +367,7 @@ Based on findings, assign an overall verdict:
 After presenting the report:
 - "Would you like me to look deeper at any specific area?"
 - "Want me to suggest fixes for any of these issues?"
-- "The cloned repo is at `~/PR-Reviews/<repo>-<number>`. Want me to clean it up, or would you like to keep it for further investigation?"
+- "The cloned repo is at `~/PR-Reviews/<org>-<repo>-<number>`. Want me to clean it up, or would you like to keep it for further investigation?"
 
 **Do NOT delete the cloned repo until the user explicitly confirms.** Always ask first.
 
