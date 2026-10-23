@@ -315,8 +315,7 @@ Based on findings, assign an overall verdict:
 
 ### Step 7: Generate the Review Report
 
-> The `# PR Review:` header marks the start of what gets stored and shown in the dashboard. The Step 3 Trace and Category Coverage blocks must appear before this header.
-
+> The `# PR Review:` header marks the start of what gets stored and shown in the dashboard.
 ````markdown
 # PR Review: <PR title>
 **PR**: <URL>
