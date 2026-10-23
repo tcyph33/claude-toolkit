@@ -1,6 +1,6 @@
-## 12. Defensive Data Handling
+## Defensive Data Handling
 
-### 12.1 Prefer Immutable Data by Default
+### IMM-1 Prefer Immutable Data by Default
 
 **Standard:** Treat data as immutable unless mutation is explicitly required by the design. Use copies or new instances rather than modifying data that was passed in. When mutation is necessary, make it obvious and contained.
 
@@ -20,7 +20,7 @@ function applyDiscount(order, discountPercent):
     return discountedOrder
 ```
 
-### 12.2 Make Copies at Trust Boundaries
+### IMM-2 Make Copies at Trust Boundaries
 
 **Standard:** When receiving mutable data from an external caller or returning internal mutable data to an external caller, create a defensive copy. This prevents external code from mutating your internal state or vice versa.
 
@@ -48,7 +48,7 @@ class Schedule:
         return slots
 ```
 
-### 12.3 Avoid Aliasing of Mutable Data
+### IMM-3 Avoid Aliasing of Mutable Data
 
 **Standard:** Do not create multiple references to the same mutable data structure unless the aliasing is intentional and documented. When two variables point to the same mutable object, modification through one alias silently affects the other.
 

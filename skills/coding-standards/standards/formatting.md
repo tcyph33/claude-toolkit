@@ -1,6 +1,6 @@
-## 10. Code Layout & Formatting
+## Code Layout & Formatting
 
-### 10.1 Use Whitespace to Reveal Logical Structure
+### FMT-1 Use Whitespace to Reveal Logical Structure
 
 **Standard:** Group related statements together and separate logical sections with blank lines. Align related assignments when it aids readability. Use indentation consistently to show containment relationships. The visual shape of the code should reflect its logical shape.
 
@@ -38,7 +38,7 @@ function processOrder(order):
     logTransaction(order.id, total)
 ```
 
-### 10.2 Keep Lines Readable
+### FMT-2 Keep Lines Readable
 
 **Standard:** Limit line length to what can be read without horizontal scrolling (typically 80-120 characters depending on the project convention). When a line must be broken, break at a logical seam — after a comma, before an operator, or at a natural grouping boundary.
 
@@ -60,7 +60,7 @@ result = someService.transformAndValidate(
 )
 ```
 
-### 10.3 Put Related Code Together
+### FMT-3 Put Related Code Together
 
 **Standard:** Code that operates on the same data or contributes to the same logical step should be physically adjacent. Do not interleave unrelated operations. If two statements must be understood together, they should appear together.
 
@@ -90,7 +90,7 @@ reportTitle = config.get("title")
 logMetric("parse_started")
 ```
 
-### 10.4 Use Formatting to Expose Errors
+### FMT-4 Use Formatting to Expose Errors
 
 **Standard:** Format parallel structures in parallel. When multiple lines follow the same pattern (e.g., a series of assignments, a series of conditionals, a data table), use consistent formatting so that deviations from the pattern are visually obvious. Use exactly one space before and after operators — do not column-align assignments, as alignment is fragile and creates unnecessary churn when names change.
 

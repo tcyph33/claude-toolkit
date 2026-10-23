@@ -1,6 +1,6 @@
-## 8. Data Structures & Table-Driven Methods
+## Data Structures & Table-Driven Methods
 
-### 8.1 Replace Complex Logic with Table Lookups
+### STR-1 Replace Complex Logic with Table Lookups
 
 **Standard:** When you have complex conditional logic that maps inputs to outputs (especially chains of if/else or switch/case with many branches), replace it with a data-driven table lookup. The table encodes the decision; the code simply indexes into it.
 
@@ -43,7 +43,7 @@ function getShippingRate(region, weight):
     return maxRate
 ```
 
-### 8.2 Choose Data Structures Deliberately
+### STR-2 Choose Data Structures Deliberately
 
 **Standard:** Select data structures based on the actual access patterns of your code. Consider insertion frequency, lookup frequency, ordering requirements, and memory constraints. Do not default to the most familiar structure — choose the one that matches the usage profile.
 
@@ -69,7 +69,7 @@ for orderId in orderIds:
     user = usersByID[orders[orderId].userId]  // O(1) per lookup
 ```
 
-### 8.3 Encapsulate Complex Data Structures
+### STR-3 Encapsulate Complex Data Structures
 
 **Standard:** When a data structure has non-trivial access rules or invariants, wrap it in a class or module that enforces those rules. Do not expose raw structures (nested maps, arrays of arrays) to consuming code.
 

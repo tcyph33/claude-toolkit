@@ -1,6 +1,6 @@
-## 6. Refactoring & Quality
+## Refactoring & Quality
 
-### 6.1 Refactor When You See Duplication
+### REF-1 Refactor When You See Duplication
 
 **Standard:** When the same logic appears in three or more places, extract it into a shared routine. Two occurrences may be coincidental; three is a pattern. When extracting, ensure the abstraction is genuine — the duplicated code must represent the same concept, not just happen to look similar.
 
@@ -38,7 +38,7 @@ function handleCreate(request):
     ...
 ```
 
-### 6.2 Refactor When a Routine is Too Long
+### REF-2 Refactor When a Routine is Too Long
 
 **Standard:** If a routine exceeds roughly 50-100 lines or you need to scroll to see it all, look for opportunities to extract logical subsections into well-named helper routines. The right length is whatever it takes to do one thing — no more.
 
@@ -62,7 +62,7 @@ function generateInvoice(order):
     sendInvoiceEmail(order.customer.email, pdf)
 ```
 
-### 6.3 Refactor When Naming is Difficult
+### REF-3 Refactor When Naming is Difficult
 
 **Standard:** If you struggle to name a variable, routine, or class, treat it as a design smell. Difficulty naming usually means the entity lacks a single coherent purpose. Restructure until a clear name emerges naturally.
 
@@ -86,7 +86,7 @@ function notifyRecordOwner(record):
     sendNotification(record.owner, "Record saved")
 ```
 
-### 6.4 Fix Broken Windows Immediately
+### REF-4 Fix Broken Windows Immediately
 
 **Standard:** When you encounter code that is clearly wrong, misleading, or poorly structured while working in that area, fix it then and there — as long as the fix is small and safe. Do not leave known problems for later when the cost of fixing now is minimal.
 
@@ -104,7 +104,7 @@ function calculateTotal(subtotal, taxRate):
     return total
 ```
 
-### 6.5 Leave Code Better Than You Found It (Boy Scout Rule)
+### REF-5 Leave Code Better Than You Found It (Boy Scout Rule)
 
 **Standard:** When you modify a file, improve the immediate surroundings if the improvement is small, safe, and unambiguous. Rename an unclear variable, remove a dead code path, or fix a misleading comment. Do not pile on large changes unrelated to your task.
 

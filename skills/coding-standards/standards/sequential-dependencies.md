@@ -1,6 +1,6 @@
-## 11. Sequential Dependencies & Temporal Coupling
+## Sequential Dependencies & Temporal Coupling
 
-### 11.1 Make Order Dependencies Visible in Code Structure
+### SEQ-1 Make Order Dependencies Visible in Code Structure
 
 **Standard:** When operations must execute in a specific sequence, make the dependency enforced by the code structure — not by comments, documentation, or convention. Use return values that feed into subsequent calls, builder patterns, or type state to make it impossible to call things out of order.
 
@@ -21,7 +21,7 @@ const AuthenticatedConfig authenticated = authenticate(config, "user", "pass")
 const Connection connection = connect(authenticated)  // can't connect without an AuthenticatedConfig
 ```
 
-### 11.2 Organize Straight-Line Code to Show Dependencies
+### SEQ-2 Organize Straight-Line Code to Show Dependencies
 
 **Standard:** When statements must execute in a specific order, structure the code so the dependency is obvious: use the result of one statement as the input to the next. When statements have no dependency, group them by logical affinity rather than by an arbitrary sequence.
 
@@ -40,7 +40,7 @@ tax = computeTax(revenue)
 total = computeTotal(revenue, tax)
 ```
 
-### 11.3 Encapsulate Multi-Step Sequences
+### SEQ-3 Encapsulate Multi-Step Sequences
 
 **Standard:** When a sequence of operations must always happen together in a fixed order, wrap them in a single routine. Do not require callers to know or reproduce the sequence.
 

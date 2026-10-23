@@ -1,6 +1,6 @@
-## 7. Testing
+## Testing
 
-### 7.1 Write Tests That Verify Intent, Not Implementation
+### TST-1 Write Tests That Verify Intent, Not Implementation
 
 **Standard:** Tests should assert *what* the code is supposed to accomplish, not *how* it accomplishes it. Tests should not break when internal implementation details change but external behavior stays the same.
 
@@ -23,7 +23,7 @@ function testCalculateDiscount():
     assert result.appliedDiscount == "15% Gold Member"
 ```
 
-### 7.2 Test Boundary Conditions
+### TST-2 Test Boundary Conditions
 
 **Standard:** For every routine, identify and explicitly test the boundary conditions: empty inputs, single-element inputs, maximum values, off-by-one boundaries, null/nil, duplicates, and type edges.
 
@@ -49,7 +49,7 @@ function testPaginate():
     assert paginate([1], pageSize=10) == [[1]]
 ```
 
-### 7.3 Make Each Test Independent
+### TST-3 Make Each Test Independent
 
 **Standard:** Each test must be able to run in isolation, in any order, and produce the same result. Tests must not depend on shared mutable state, execution order, or side effects from other tests.
 
@@ -79,7 +79,7 @@ function testDeleteUser():
     assert user.isDeleted
 ```
 
-### 7.4 Test One Thing Per Test
+### TST-4 Test One Thing Per Test
 
 **Standard:** Each test should verify a single behavior or scenario. If a test fails, it should be immediately obvious which behavior is broken without reading the test body.
 
@@ -114,7 +114,7 @@ function testRegistrationAssignsDefaultRole():
     assert user.defaultRole == "member"
 ```
 
-### 7.5 Name Tests as Specifications
+### TST-5 Name Tests as Specifications
 
 **Standard:** Test names should read as a specification of behavior: what scenario is being tested and what the expected outcome is. A reader should understand what the system does just by reading the test names.
 

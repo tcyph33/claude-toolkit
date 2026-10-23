@@ -1,6 +1,6 @@
-## 4. Defensive Programming
+## Defensive Programming
 
-### 4.1 Validate Data at System Boundaries
+### DFP-1 Validate Data at System Boundaries
 
 **Standard:** Validate all data that crosses a trust boundary: user input, API responses, file contents, database results, and inter-service messages. Once validated, internal code can trust the data without re-validating.
 
@@ -37,7 +37,7 @@ function handleRequest(request):
     return ageResponse
 ```
 
-### 4.2 Handle Errors Deliberately — Don't Swallow or Ignore
+### DFP-2 Handle Errors Deliberately — Don't Swallow or Ignore
 
 **Standard:** Every error path must be explicitly handled. Never use empty catch blocks. Choose a deliberate strategy for each error: recover, propagate with context, or fail fast with a meaningful message.
 
@@ -67,7 +67,7 @@ catch ParseError as e:
     raise DataCorruptionError("API returned unparseable response", cause=e)
 ```
 
-### 4.3 Fail Fast
+### DFP-3 Fail Fast
 
 **Standard:** When an error is detected that makes further processing meaningless or dangerous, stop immediately with a clear error message. Do not attempt to continue in a half-broken state.
 
@@ -104,7 +104,7 @@ function processConfig(configPath):
     return connection
 ```
 
-### 4.4 Define Boundaries for Acceptable Input (Barricades)
+### DFP-4 Define Boundaries for Acceptable Input (Barricades)
 
 **Standard:** Establish a clear boundary (a "barricade") in your architecture beyond which data is assumed clean. Input-handling code on the outside validates and sanitizes; code on the inside operates on trusted data.
 

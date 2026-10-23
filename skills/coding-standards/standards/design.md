@@ -1,6 +1,6 @@
-## 1. Design & Complexity
+## Design & Complexity
 
-### 1.1 Keep Routines Small and Focused
+### DSN-1 Keep Routines Small and Focused
 
 **Standard:** Every routine (function, method) should do one thing and do it well. A routine should have a single, clearly identifiable purpose. If you cannot describe what a routine does with a concise name, it is doing too much.
 
@@ -32,7 +32,7 @@ function applyPricing(order: Order) -> Order:
     return order
 ```
 
-### 1.2 Minimize Coupling Between Modules
+### DSN-2 Minimize Coupling Between Modules
 
 **Standard:** Modules and classes should depend on as few other modules as possible. Connections between modules should be narrow (few parameters), visible (explicit, not through globals), and flexible (using abstractions rather than concrete implementations).
 
@@ -52,7 +52,7 @@ function formatReport(recordProvider: RecordProvider) -> String:
     return formattedReport
 ```
 
-### 1.3 Practice Information Hiding
+### DSN-3 Practice Information Hiding
 
 **Standard:** Each module should hide a design decision — a piece of complexity — behind a simple interface. Internal data structures, algorithms, and implementation choices should not be visible to callers.
 
@@ -75,7 +75,7 @@ class Employee:
         return netPay
 ```
 
-### 1.4 Limit Nesting and Complexity per Routine
+### DSN-4 Limit Nesting and Complexity per Routine
 
 **Standard:** Keep cyclomatic complexity low (aim for under 7 decision points per routine). Nesting deeper than 3 levels is a signal to extract a subroutine or restructure.
 
@@ -117,7 +117,7 @@ function getDiscount(customer: Customer, order: Order) -> double:
     return STANDARD_DISCOUNT
 ```
 
-### 1.5 Design at the Right Level of Abstraction
+### DSN-5 Design at the Right Level of Abstraction
 
 **Standard:** Each routine should operate at a single, consistent level of abstraction. Do not mix high-level orchestration with low-level detail in the same routine.
 
