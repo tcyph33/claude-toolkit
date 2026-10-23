@@ -1,6 +1,6 @@
 ## Self-Documenting Code
 
-### DOC-1 Make Code Read Without Comments
+### DOC-1: Make Code Read Without Comments
 
 **Standard:** The primary documentation for code is the code itself. Use descriptive names, clear structure, and appropriate abstraction so the code communicates intent directly. If an individual line of code needs a comment to explain what it does, rewrite the line more clearly.
 
@@ -23,7 +23,7 @@ for Employee employee in employees:
         totalFullTimeSalary += employee.salary
 ```
 
-### DOC-2 Comment the Why, Not the What
+### DOC-2: Comment the Why, Not the What
 
 **Standard:** Write comments only when code cannot convey intent alone — typically to explain *why* a non-obvious decision was made, document external constraints, or note workarounds with ticket references.
 
@@ -44,7 +44,7 @@ taxRate = getPreviousYearRate()
 sleep(2 ** attemptNumber)
 ```
 
-### DOC-3 Comment Surprises and Non-Obvious Side Effects
+### DOC-3: Comment Surprises and Non-Obvious Side Effects
 
 **Standard:** When code has behavior that is not obvious from reading it — side effects, performance implications, external dependencies, unintuitive edge cases, or counterintuitive results — mark it with a comment. If a reader would be surprised by what the code does, that surprise must be documented.
 
@@ -79,7 +79,7 @@ function readAll(source):
     return data
 ```
 
-### DOC-4 Comment Each Code Block with High-Level Intent
+### DOC-4: Comment Each Code Block with High-Level Intent
 
 **Standard:** Every logical block of code within a routine must be preceded by a short comment describing the high-level intent — what it accomplishes, not how. A "logical block" is identified by blank-line boundaries: any contiguous group of lines bounded above and below by blank lines (or by the start/end of a routine) constitutes a block requiring an intent comment. If a chunk of code has no comment above it, it violates this standard — no exceptions. The comment should be short (one line) and name the purpose of the block — do not restate what the code does, do not explain the obvious consequence, and do not add reasoning that the reader can infer from context. A good intent comment could replace the block with a single sentence summary if the code were removed. If a routine has no block without an intent comment above it, you are doing it right.
 
@@ -126,7 +126,7 @@ function processMonthlyBilling(accounts):
             flagForReview(account)
 ```
 
-### DOC-5 Use Routine Names as Documentation
+### DOC-5: Use Routine Names as Documentation
 
 **Standard:** A routine's name should describe everything it does. If you cannot name a routine concisely, it is doing too much. Function names should be verb phrases for procedures and noun/adjective phrases for functions that return values.
 
@@ -147,7 +147,7 @@ function formatAsCSV(records)
 function sendPasswordResetEmail(user)
 ```
 
-### DOC-6 Document Function Intent, Inputs, Output, and Exceptions
+### DOC-6: Document Function Intent, Inputs, Output, and Exceptions
 
 **Standard:** Every function must have a documentation comment that describes: (1) a high-level summary of what the function does, (2) each input parameter with its name, type, and purpose, (3) what the function returns — only if it actually returns a value (omit the `@returns` tag entirely for void/side-effect-only functions that return nothing), and (4) any exceptions or errors the function can throw. Use the idiomatic documentation format for the language (e.g., JSDoc for TypeScript/JavaScript, docstrings with Args/Returns/Raises for Python, Javadoc with @param/@return/@throws for Java, `///` for Rust, doc comments for Go).
 
@@ -176,7 +176,7 @@ function calculateShippingCost(order: Order, destination: Address, expedited: bo
 }
 ```
 
-### DOC-7 Use Naming Conventions Consistently
+### DOC-7: Use Naming Conventions Consistently
 
 **Standard:** Choose a naming convention for each element type (variables, functions, classes, constants) and apply it consistently throughout the project. Follow the dominant convention of the language ecosystem. Constants whose value is known at write time (compile-time constants, fixed configuration values, magic number replacements) must use UPPER_SNAKE_CASE. Runtime constants whose value is computed or derived from input at execution time use the same casing as regular variables (e.g., camelCase or snake_case depending on language).
 

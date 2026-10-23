@@ -1,6 +1,6 @@
 ## Routine Parameters
 
-### PRM-1 Limit Parameter Count
+### PRM-1: Limit Parameter Count
 
 **Standard:** Routines should accept no more than 7 parameters. If a routine needs more, group related parameters into a cohesive object or structure. This limit applies to the conceptual interface — splitting parameters across multiple setter calls to dodge the limit violates the spirit of this standard.
 
@@ -30,7 +30,7 @@ function createUser(request: UserRequest):
     ...
 ```
 
-### PRM-2 Use Consistent Parameter Ordering
+### PRM-2: Use Consistent Parameter Ordering
 
 **Standard:** Establish a consistent parameter ordering convention and follow it across all routines in a module. Common conventions: input parameters first, output parameters last; or primary subject first, modifiers after. Within a group of related functions, the same conceptual parameter should appear in the same position.
 
@@ -51,7 +51,7 @@ function linkFile(source, linkName, options)
 function deleteFile(path, options)
 ```
 
-### PRM-3 Document Parameter Assumptions
+### PRM-3: Document Parameter Assumptions
 
 **Standard:** When a parameter has constraints that are not obvious from its type (e.g., must be positive, must be non-empty, must be sorted, must be a valid enum value), document these assumptions at the routine boundary — either through type system enforcement, assertions, or a brief comment on the parameter.
 
@@ -79,7 +79,7 @@ function paginate(items: List, page: int, pageSize: int) -> List:
     return pageResults
 ```
 
-### PRM-4 Avoid Flag Parameters
+### PRM-4: Avoid Flag Parameters
 
 **Standard:** Do not use boolean parameters that switch a routine's behavior between two modes. Instead, create two routines with clear names, or use an enum/named constant if more than two modes exist.
 

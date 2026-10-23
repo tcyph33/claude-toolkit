@@ -1,6 +1,6 @@
 ## Control Flow
 
-### CTL-1 Put the Normal Case First
+### CTL-1: Put the Normal Case First
 
 **Standard:** In conditional statements where both branches continue execution (no early return), put the most common or expected path in the `if` clause. Reserve `else` for the less common case. This standard does NOT apply to guard clauses (see 3.4) — when one branch exits early, prefer the guard clause pattern instead.
 
@@ -31,7 +31,7 @@ if (isInvalid):
 // ... normal processing continues at base indentation
 ```
 
-### CTL-2 Extract Conditionals into Named Boolean Variables
+### CTL-2: Extract Conditionals into Named Boolean Variables
 
 **Standard:** Every `if` statement and `while` loop condition must evaluate a named boolean variable — never an inline expression. Each boolean variable should represent exactly one logical condition, wrapped in parentheses to make the comparison explicit and the intended order of operations unambiguous. Each sub-expression within a compound comparison should also be parenthesized.
 
@@ -62,7 +62,7 @@ if (isEligibleForDiscount):
     applyDiscount(order)
 ```
 
-### CTL-3 Simplify Complex Boolean Expressions
+### CTL-3: Simplify Complex Boolean Expressions
 
 **Standard:** Break complex boolean expressions into well-named intermediate variables or extract them into descriptive functions. A boolean expression with more than 2-3 terms should be simplified. Compound conditions must be composed from individually named booleans, not combined in a single expression. Each boolean variable should hold exactly one logical condition. When combining 3 or more boolean variables into a single compound expression, break the expression across multiple lines with one term per line.
 
@@ -95,7 +95,7 @@ if (isEligible):
     grantAccess(user)
 ```
 
-### CTL-4 Use Loop Variables Correctly
+### CTL-4: Use Loop Variables Correctly
 
 **Standard:** A loop must have a single, predictable mechanism for advancing. Do not combine a `for` header's automatic increment with manual index mutations in the body — this creates two competing sources of control. If a loop requires conditional advancement, use a `while` loop where the body is the sole owner of the index. Use meaningful names for loop variables when the loop body is more than a few lines.
 
@@ -128,7 +128,7 @@ while (hasItemsRemaining):
     hasItemsRemaining = (index < items.length)
 ```
 
-### CTL-5 Avoid Deep Nesting with Early Exit
+### CTL-5: Avoid Deep Nesting with Early Exit
 
 **Standard:** Use guard clauses (early returns, early continues, early breaks) to handle edge cases and errors at the top of a block, leaving the main logic at the base nesting level.
 
@@ -179,7 +179,7 @@ function processPayment(payment):
     return paymentReceipt
 ```
 
-### CTL-6 Use Structured Control Flow
+### CTL-6: Use Structured Control Flow
 
 **Standard:** Use only standard control structures: sequence, selection (if/else, switch/case), and iteration (for, while). Avoid goto, deep recursion where iteration suffices, and complex exception-based control flow.
 

@@ -1,6 +1,6 @@
 ## Variables & Data
 
-### VAR-1 Initialize Variables Close to First Use
+### VAR-1: Initialize Variables Close to First Use
 
 **Standard:** Declare and initialize variables as close as possible to where they are first used, and in the smallest scope that contains all their uses. If a variable is only needed inside a loop, conditional, or inner block, declare it there — not in the enclosing scope. Never declare all variables at the top of a routine unless the language requires it. This applies equally to constants — do not group all constants in a block at the top of a file or module. Define each constant in the innermost scope that uses it, whether that is inside a loop body, a function, at the top of a class, or at module level only if truly used across the module.
 
@@ -49,7 +49,7 @@ function paginate(items: List) -> List:
     return chunkItems
 ```
 
-### VAR-2 Minimize Variable Scope
+### VAR-2: Minimize Variable Scope
 
 **Standard:** Give each variable the smallest scope possible. Prefer local variables over instance variables, instance variables over class variables, and class variables over globals. If a variable is only needed inside a loop or conditional, declare it there.
 
@@ -76,7 +76,7 @@ class OrderProcessor:
         return total
 ```
 
-### VAR-3 Use Meaningful, Precise Names
+### VAR-3: Use Meaningful, Precise Names
 
 **Standard:** Names should fully and accurately describe what the variable represents. Use names that are specific enough to distinguish the variable from others. Never abbreviate words — spell out every word completely. The only exceptions are universally understood abbreviations that would look unnatural written out (e.g., `id`, `url`, `html`, `api`). If a word can be spelled out without sounding awkward, spell it out. Boolean names should read as true/false assertions.
 
@@ -103,7 +103,7 @@ String commandResult = execute(input);
 String repositoryDirectory = getClonePath();
 ```
 
-### VAR-4 Name Booleans in the Positive Form
+### VAR-4: Name Booleans in the Positive Form
 
 **Standard:** Always name boolean variables in the positive/affirmative form — expressing what something *is*, *has*, or *can* do (e.g., `isEmpty`, `isValid`, `hasPermission`, `canRetry`). Never embed negation in the name (e.g., `isNotEmpty`, `isInvalid`, `hasNoPermission`). When you need the negative sense, negate the positive-form variable with `!` (e.g., `!isEmpty`).
 
@@ -131,7 +131,7 @@ if (!isValid):      // clearly: validation failed
 if (!hasPermission): // clearly: access denied
 ```
 
-### VAR-5 Use Named Constants Instead of Magic Numbers
+### VAR-5: Use Named Constants Instead of Magic Numbers
 
 **Standard:** Replace every literal number or string that has meaning with a named constant. The only acceptable literal numbers are 0 and 1 when used in their obvious mathematical sense.
 
@@ -155,7 +155,7 @@ if (isOverRetryLimit):
     sendAlert(THRESHOLD_ALERT_MESSAGE)
 ```
 
-### VAR-6 One Purpose Per Variable
+### VAR-6: One Purpose Per Variable
 
 **Standard:** Each variable should have exactly one purpose. Never reuse a variable for a different meaning later in the same routine (e.g., using `temp` for a running total and then later for a formatted string).
 
@@ -174,7 +174,7 @@ int inputLength = input.length();
 String formattedResult = formatOutput(result);
 ```
 
-### VAR-7 Always Use Explicit Type Declarations
+### VAR-7: Always Use Explicit Type Declarations
 
 **Standard:** Always declare variable types explicitly, even when the language supports type inference. This applies to all variable declarations, function parameters, and return types. In dynamically typed languages, use type annotations (e.g., Python type hints, TypeScript types) rather than relying on inference.
 
@@ -208,7 +208,7 @@ const isEnabled: boolean = (config.featureFlag === "on");
 const users: User[] = await fetchUsers(teamId);
 ```
 
-### VAR-8 Parenthesize All Math Expressions
+### VAR-8: Parenthesize All Math Expressions
 
 **Standard:** Always use explicit parentheses in arithmetic and mathematical expressions to make the order of operations unambiguous. Do not rely on operator precedence rules — even when the default precedence would produce the correct result, parentheses make intent visible.
 
@@ -225,7 +225,7 @@ final double total = ((subtotal * taxRate) + subtotal)
 final double discount = ((price * quantity) - (rebate / 2))
 ```
 
-### VAR-9 Never Return Expressions Directly
+### VAR-9: Never Return Expressions Directly
 
 **Standard:** Never return a computed expression directly from a `return` statement. Always assign the result to a named variable first, then return that variable. The variable name documents what the value represents.
 
