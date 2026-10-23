@@ -94,6 +94,18 @@ Specific checks:
 - **Check generated/derived files** — if the repo uses code generation (schemas → types, OpenAPI → clients, Zod → JSON schemas, projen → configs, lock files), verify they've been regenerated to reflect the source changes. Stale generated files are a common miss.
 - **Check CI/CD and build tool configs** — look for references to deleted paths in package.json scripts, Makefile targets, CI workflows, projen tasks, Dockerfiles, and similar configuration files.
 
+**After completing the above, output a trace block before moving on:**
+
+```
+## Step 3 Trace
+Files read in full: [list each file you read beyond the diff]
+Greps run: [command] → [key results, or "no hits"]
+Generated files checked: [list, or "none applicable"]
+CI/build configs checked: [list, or "none applicable"]
+```
+
+---
+
 ### Step 4: Run the Review Checklist
 
 Evaluate every category below. For each finding, record the severity and specific file:line reference.
@@ -260,6 +272,24 @@ Is non-obvious logic explained?
 
 ---
 
+**After evaluating all categories, output a coverage block before moving on:**
+
+```
+## Category Coverage
+CR: evaluated CR-1–CR-9 — [flagged: CR-X | none flagged]
+RE: evaluated RE-1–RE-8 — [flagged: RE-X | none flagged]
+DA: evaluated DA-1–DA-9 — [flagged: DA-X | none flagged]
+RM: evaluated RM-1–RM-8 — [flagged: RM-X | none flagged]
+CM: evaluated CM-1–CM-5 — [flagged: CM-X | none flagged]
+SV: evaluated SV-1–SV-6 — [flagged: SV-X | none flagged]
+TC: evaluated TC-1–TC-10 — [flagged: TC-X | none flagged]
+SP: evaluated SP-1–SP-5 — [flagged: SP-X | none flagged]
+PE: evaluated PE-1–PE-5 — [flagged: PE-X | none flagged]
+DI: evaluated DI-1–DI-5 — [flagged: DI-X | none flagged]
+```
+
+---
+
 ### Step 5: Pre-Report Self-Check
 
 Before finalizing findings, pause and verify:
@@ -284,6 +314,8 @@ Based on findings, assign an overall verdict:
 | **NEEDS DISCUSSION** | Architectural or design questions that require human judgment. |
 
 ### Step 7: Generate the Review Report
+
+> The `# PR Review:` header marks the start of what gets stored and shown in the dashboard. The Step 3 Trace and Category Coverage blocks must appear before this header.
 
 ````markdown
 # PR Review: <PR title>
